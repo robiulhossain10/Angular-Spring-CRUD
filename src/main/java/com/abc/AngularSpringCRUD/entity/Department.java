@@ -23,6 +23,7 @@ public class Department extends BaseEntity {
     @Size(min = 2,max = 110)
     private String name;
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "department", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Student> students;
+
 }
