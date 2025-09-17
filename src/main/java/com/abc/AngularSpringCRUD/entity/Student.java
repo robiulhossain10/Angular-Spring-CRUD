@@ -1,6 +1,8 @@
 package com.abc.AngularSpringCRUD.entity;
 
 import com.abc.AngularSpringCRUD.config.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -41,6 +43,7 @@ public class Student extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "department_id")
+    @JsonIgnoreProperties("students")
     private Department department;
 
 }

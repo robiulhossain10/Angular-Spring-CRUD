@@ -17,28 +17,28 @@ public class DepartmentController {
     }
 
     @PostMapping("/create")
-    public Department create(@Valid @RequestBody Department dept){
+    public Department create(@Valid @RequestBody Department dept) {
         return service.save(dept);
     }
 
     @GetMapping("/users")
-    public List<Department> getAll(){
+    public List<Department> getAll() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public Department getById(@PathVariable Long id){
+    public Department getById(@PathVariable Long id) {
         return service.FindById(id).orElse(null);
     }
 
     @PutMapping("/{id}")
-    public Department update(@PathVariable Long id, @Valid @RequestBody Department dept){
+    public Department update(@PathVariable Long id, @Valid @RequestBody Department dept) {
         dept.setId(id);
         return service.save(dept);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable Long id) {
         service.deleteById(id);
     }
 
