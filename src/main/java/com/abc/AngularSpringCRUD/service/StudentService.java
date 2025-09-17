@@ -1,8 +1,5 @@
 package com.abc.AngularSpringCRUD.service;
-
-import com.abc.AngularSpringCRUD.entity.Department;
 import com.abc.AngularSpringCRUD.entity.Student;
-import com.abc.AngularSpringCRUD.repository.DepartmentRepository;
 import com.abc.AngularSpringCRUD.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 

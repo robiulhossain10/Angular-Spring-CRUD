@@ -1,8 +1,6 @@
 package com.abc.AngularSpringCRUD.controller;
 
-import com.abc.AngularSpringCRUD.entity.Department;
 import com.abc.AngularSpringCRUD.entity.Student;
-import com.abc.AngularSpringCRUD.service.DepartmentService;
 import com.abc.AngularSpringCRUD.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
