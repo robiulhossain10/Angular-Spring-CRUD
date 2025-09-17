@@ -18,6 +18,7 @@ public class StudentService {
     }
 
     public Student save(Student dept){
+        System.out.println("Repository save: " + dept.getFirstName());
         return repository.save(dept);
     }
 
