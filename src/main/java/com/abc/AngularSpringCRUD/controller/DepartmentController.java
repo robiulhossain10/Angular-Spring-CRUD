@@ -22,11 +22,11 @@ public class DepartmentController {
     }
 
     @PostMapping("/test/{id}")
-    public String testcreate(@Valid @PathVariable Long id, @RequestBody Department dept, @RequestParam(name = "test" )  String get) {
+    public String testcreate(@Valid @PathVariable Long id, @RequestBody Department dept, @RequestParam(name = "ami" )  String get) {
         System.out.println("id : " + id);
         System.out.println(dept.toString());
         System.out.println(get);
-        return "";
+        return "oks";
     }
 
     @GetMapping("/users")
