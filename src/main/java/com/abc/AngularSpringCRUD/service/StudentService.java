@@ -11,6 +11,7 @@ import com.abc.AngularSpringCRUD.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -26,23 +27,25 @@ public class StudentService {
     private final DepartmentRepository departmentRepository;
 
 
-    //
-//    public Student save(Student dept){
-//        System.out.println("Repository save: " + dept.getFirstName());
-//        return repository.save(dept);
-//    }
-//
-    public List<Student> findAll() {
-        return repository.findAll();
+    @Transactional
+    public StudentDTO save(StudentDTO dto){
+        Student student = toEntity(dto);
+        return toDTO(repository.save(student));
     }
-//
-//    public Optional<Student> FindById(Long id){
-//        return repository.findById(id);
-//    }
-//
-//    public void deleteById(Long id){
-//        repository.deleteById(id);
-//    }
+
+    public List<StudentDTO> findAll() {
+        return repository.findAll().stream().map(this::toDTO).toList();
+    }
+
+    public StudentDTO FindById(Long id){
+        return repository.findById(id).map(this::toDTO).orElseThrow(() -> new RuntimeException("Student Not Found with id: " + id)) ;
+    }
+
+    public void deleteById(Long id){
+        if (!repository.existsById(id)){
+            throw new RuntimeException("Student Not Found with id: " + id);
+        }
+    }
 
     public StudentDTO getStudentById(Long id) {
         Optional<Student> st = repository.findById(id);
@@ -68,6 +71,8 @@ public class StudentService {
         dto.setLast_name(student.getLastName());
         dto.setEmail(student.getEmail());
         dto.setDob(student.getDob());
+        dto.setAddress(student.getAddress());
+       dto.setPhone(student.getPhone());
 
         if (student.getDepartment() != null) {
             DepartmentDTO dp = new DepartmentDTO();
@@ -94,6 +99,10 @@ public class StudentService {
             st.setLastName(studentDTO.getLast_name());
             st.setEmail(studentDTO.getEmail());
             st.setDob(studentDTO.getDob());
+            st.setAddress(studentDTO.getAddress());
+            st.setPhone(studentDTO.getPhone());
+
+
             if (studentDTO.getDepartmentDTO() != null) {
                 Department dp =
                         departmentRepository.findById(studentDTO.getDepartmentDTO().getId()).orElseThrow(
@@ -102,7 +111,7 @@ public class StudentService {
                 st.setDepartment(dp);
         }
 
-            if (studentDTO.getCourseIds() != null &&  !studentDTO.getCourseIds().isEmpty()) {
+            if (studentDTO.getCourseIds() != null) {
                 Set<Course> courses = new HashSet<>(courseRepository.findAllById(studentDTO.getCourseIds()));
                 st.getCourses().clear();
                 st.getCourses().addAll(courses);

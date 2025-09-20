@@ -5,6 +5,7 @@ import com.abc.AngularSpringCRUD.repository.DepartmentRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ public class DepartmentService {
         this.repository = repository;
     }
 
+    @Transactional
     public Department save(Department dept){
         return repository.save(dept);
     }

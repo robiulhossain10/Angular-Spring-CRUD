@@ -11,9 +11,12 @@ public class StudentDTO {
     private String first_name;
     private String last_name;
     private String email;
+    private String phone;
+    private String address;
     private LocalDate dob;
 
     private DepartmentDTO departmentDTO;
 
     private Set<Long> courseIds;
+    private Set<CourseDTO> courses;
 }
