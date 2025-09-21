@@ -4,15 +4,13 @@ import com.abc.AngularSpringCRUD.config.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
 @Entity
 @AllArgsConstructor
@@ -44,7 +42,8 @@ public class Student extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "department_id")
-    @JsonIgnoreProperties("students")
+//    @JsonIgnoreProperties("students")
+    @ToString.Exclude
     private Department department;
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

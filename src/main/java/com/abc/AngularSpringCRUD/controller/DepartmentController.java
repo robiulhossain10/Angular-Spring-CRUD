@@ -1,8 +1,11 @@
 package com.abc.AngularSpringCRUD.controller;
 
+import com.abc.AngularSpringCRUD.dtos.DepartmentDTO;
 import com.abc.AngularSpringCRUD.entity.Department;
 import com.abc.AngularSpringCRUD.service.DepartmentService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,38 +19,35 @@ public class DepartmentController {
         this.service = service;
     }
 
-    @PostMapping("/create")
-    public Department create(@Valid @RequestBody Department dept) {
-        return service.save(dept);
+    // ---------- Create Department ----------
+    @PostMapping
+    public ResponseEntity<DepartmentDTO> createDepartment(@RequestBody DepartmentDTO dto) {
+        DepartmentDTO saved = service.saveDepartment(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+//    @PostMapping
+//    public ResponseEntity<?> createDepartment(@RequestBody DepartmentDTO dto) {
+//        return service.saveDepartment1(dto);
+//    }
+
+    // ---------- Get All ----------
+    @GetMapping
+    public ResponseEntity<List<DepartmentDTO>> getAllDepartments() {
+        return ResponseEntity.ok(service.getAllDepartments());
     }
 
-    @PostMapping("/test/{id}")
-    public String testcreate(@Valid @PathVariable Long id, @RequestBody Department dept, @RequestParam(name = "ami" )  String get) {
-        System.out.println("id : " + id);
-        System.out.println(dept.toString());
-        System.out.println(get);
-        return "oks";
-    }
-
-    @GetMapping("/users")
-    public List<Department> getAll() {
-        return service.findAll();
-    }
-
+    // ---------- Get by ID ----------
     @GetMapping("/{id}")
-    public Department getById(@PathVariable Long id) {
-        return service.FindById(id).orElse(null);
+    public ResponseEntity<DepartmentDTO> getDepartmentById(@PathVariable Long id) {
+        DepartmentDTO dto = service.getDepartmentById(id);
+        return ResponseEntity.ok(dto);
     }
 
-    @PutMapping("/{id}")
-    public Department update(@PathVariable Long id, @Valid @RequestBody Department dept) {
-        dept.setId(id);
-        return service.save(dept);
-    }
-
+    // ---------- Delete ----------
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.deleteById(id);
+    public ResponseEntity<Void> deleteDepartment(@PathVariable Long id) {
+        service.deleteDepartment(id);
+        return ResponseEntity.noContent().build();
     }
 
 
